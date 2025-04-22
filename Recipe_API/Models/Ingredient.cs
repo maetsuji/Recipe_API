@@ -9,4 +9,11 @@ public class Ingredient
 
     [Required]
     public string UnitOfMeasure { get; set; }
+
+    public Ingredient()
+    {
+        Name = string.Empty; // Inicializa com um valor padrão
+        UnitOfMeasure = string.Empty; // Inicializa com um valor padrão
+    }
 }
+
