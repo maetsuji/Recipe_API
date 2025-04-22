@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "oRCCT8ys7Yo=",
+  "success": true,
+  "projectFilePath": "/home/maetsuji/Recipe_API/Recipe_API/Recipe_API.csproj",
+  "expectedPackageFiles": [
+    "/home/maetsuji/.nuget/packages/microsoft.aspnetcore.openapi/9.0.3/microsoft.aspnetcore.openapi.9.0.3.nupkg.sha512",
+    "/home/maetsuji/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512",
+    "/home/maetsuji/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.3/microsoft.aspnetcore.app.ref.9.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
