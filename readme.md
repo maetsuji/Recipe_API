@@ -183,7 +183,7 @@ If you are using a tool like [Postman](https://www.postman.com/) or [curl](https
      ```
      {
        "name": "New Ingredient",
-       "unit": "grams"
+       "unitOfMeasure": "grams"
      }
      ```
    Example with curl:
@@ -192,7 +192,7 @@ If you are using a tool like [Postman](https://www.postman.com/) or [curl](https
         -H "Content-Type: application/json" \
         -d "{
               \"name\": \"New Ingredient\",
-              \"unit\": \"grams\"
+              \"unitOfMeasure\": \"grams\"
             }"
    ```
 
@@ -204,7 +204,7 @@ If you are using a tool like [Postman](https://www.postman.com/) or [curl](https
      {
        "id": 2,
        "name": "Updated Ingredient Name",
-       "unit": "ml"
+       "unitOfMeasure": "ml"
      }
      ```
    Example with curl:
@@ -214,7 +214,7 @@ If you are using a tool like [Postman](https://www.postman.com/) or [curl](https
         -d "{
               \"id\": 2,
               \"name\": \"Updated Ingredient Name\",
-              \"unit\": \"ml\"
+              \"unitOfMeasure\": \"ml\"
             }"
    ```
 
@@ -232,7 +232,6 @@ If you are using a tool like [Postman](https://www.postman.com/) or [curl](https
 ## Notes
 
 • Replace `<PORT>` with the actual port on which your application is running (most often 5000 for HTTP, or 7000 for HTTPS by default, unless otherwise configured).  
-• The "id" fields in these JSON examples may or may not be required by your particular implementation. Depending on how your controllers are set up, the API might ignore the ID in the body and only use the one in the route.  
 
 --------------------------------------------------------------------------------
 
