@@ -12,5 +12,9 @@ public class AppDbContext : DbContext
         // Additional configurations for relationships, if necessary
         modelBuilder.Entity<RecipeIngredient>()
             .HasKey(ri => new { ri.IngredientId, ri.Quantity });
+        // Define a unique index on the Name property
+        modelBuilder.Entity<Ingredient>()
+            .HasIndex(i => i.Name)
+            .IsUnique();
     }
 }

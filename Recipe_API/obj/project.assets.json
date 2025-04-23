@@ -3176,19 +3176,19 @@
     ]
   },
   "packageFolders": {
-    "/home/maetsuji/.nuget/packages/": {}
+    "C:\\Users\\rodri\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/maetsuji/Recipe_API/Recipe_API/Recipe_API.csproj",
+      "projectUniqueName": "C:\\Users\\rodri\\Recipe_API\\Recipe_API\\Recipe_API.csproj",
       "projectName": "Recipe_API",
-      "projectPath": "/home/maetsuji/Recipe_API/Recipe_API/Recipe_API.csproj",
-      "packagesPath": "/home/maetsuji/.nuget/packages/",
-      "outputPath": "/home/maetsuji/Recipe_API/Recipe_API/obj/",
+      "projectPath": "C:\\Users\\rodri\\Recipe_API\\Recipe_API\\Recipe_API.csproj",
+      "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\rodri\\Recipe_API\\Recipe_API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/maetsuji/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -3212,7 +3212,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -3254,12 +3254,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[9.0.3, 9.0.3]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -3268,7 +3262,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.104/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

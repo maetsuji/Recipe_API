@@ -24,6 +24,14 @@ public class IngredientsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> PostIngredient(Ingredient ingredient)
     {
+            if (await _context.Ingredients.AnyAsync(i => i.Name == ingredient.Name))
+        {
+            return BadRequest($"An ingredient with the name '{ingredient.Name}' already exists.");
+        }
+        if (string.IsNullOrWhiteSpace(ingredient.Name))
+        {
+            return BadRequest("Ingredient name cannot be empty.");
+        }
         _context.Ingredients.Add(ingredient);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetIngredients), new { id = ingredient.Id }, ingredient);
