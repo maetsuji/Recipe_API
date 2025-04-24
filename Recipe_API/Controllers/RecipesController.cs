@@ -82,58 +82,42 @@ public class RecipesController : ControllerBase
 
     // PUT: api/recipes/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutRecipe(int id, Recipe recipe)
+    public async Task<IActionResult> PutRecipe(int id, Recipe updatedRecipe)
     {
-        if (id != recipe.Id)
+        if (id != updatedRecipe.Id)
         {
             return BadRequest("Recipe ID in the URL does not match the ID in the payload.");
         }
 
-        if (string.IsNullOrWhiteSpace(recipe.Name))
+        // Fetch existing recipe with ingredients
+        var existingRecipe = await _context.Recipes
+            .Include(r => r.Ingredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .FirstOrDefaultAsync(r => r.Id == id);
+
+        if (existingRecipe == null)
         {
-            return BadRequest("Recipe name cannot be empty.");
+            return NotFound($"Recipe with ID {id} not found.");
         }
 
-        if (string.IsNullOrWhiteSpace(recipe.PreparationMethod))
-        {
-            return BadRequest("Preparation method cannot be empty.");
-        }
+        // Update top-level fields
+        existingRecipe.Name = updatedRecipe.Name;
+        existingRecipe.PreparationMethod = updatedRecipe.PreparationMethod;
 
-        if (recipe.Ingredients == null || recipe.Ingredients.Count == 0)
-        {
-            return BadRequest("Recipe must have at least one ingredient.");
-        }
-
-        foreach (var recipeIngredient in recipe.Ingredients)
+        // Clear old ingredients, then add the updated ones
+        existingRecipe.Ingredients.Clear();
+        foreach (var recipeIngredient in updatedRecipe.Ingredients)
         {
             var existingIngredient = await _context.Ingredients.FindAsync(recipeIngredient.IngredientId);
-
             if (existingIngredient == null)
             {
                 return BadRequest($"Ingredient with ID {recipeIngredient.IngredientId} does not exist.");
             }
-
             recipeIngredient.Ingredient = existingIngredient;
+            existingRecipe.Ingredients.Add(recipeIngredient);
         }
 
-        _context.Entry(recipe).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!RecipeExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-
+        await _context.SaveChangesAsync();
         return NoContent();
     }
 
