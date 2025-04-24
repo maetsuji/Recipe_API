@@ -23,6 +23,22 @@ public class RecipesController : ControllerBase
         return Ok(recipes);
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetRecipe(int id)
+    {
+        var recipe = await _context.Recipes
+            .Include(r => r.Ingredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .FirstOrDefaultAsync(r => r.Id == id);
+
+        if (recipe == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(recipe);
+    }
+
     // POST: api/recipes
     [HttpPost]
     public async Task<IActionResult> PostRecipe(Recipe recipe)
@@ -48,19 +64,14 @@ public class RecipesController : ControllerBase
         // Validate each ingredient in the recipe
         foreach (var recipeIngredient in recipe.Ingredients)
         {
-            // Check if the ingredient exists in the database
             var existingIngredient = await _context.Ingredients.FindAsync(recipeIngredient.IngredientId);
 
-            if (existingIngredient != null)
+            if (existingIngredient == null)
             {
-                // Use the existing ingredient
-                recipeIngredient.Ingredient = existingIngredient;
-            }
-            else
-            {
-                // Optionally, throw an error or handle the case where the ingredient doesn't exist
                 return BadRequest($"Ingredient with ID {recipeIngredient.IngredientId} does not exist.");
             }
+
+            recipeIngredient.Ingredient = existingIngredient;
         }
 
         _context.Recipes.Add(recipe);
@@ -71,23 +82,57 @@ public class RecipesController : ControllerBase
 
     // PUT: api/recipes/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutRecipe(int id, Recipe recipe)
+    public async Task<IActionResult> PutRecipe(int id, Recipe updatedRecipe)
     {
-        if (id != recipe.Id)
+        if (id != updatedRecipe.Id)
         {
-            return BadRequest();
+            return BadRequest("Recipe ID in the URL does not match the ID in the payload.");
         }
 
-        _context.Entry(recipe).State = EntityState.Modified;
+        // Fetch existing recipe with ingredients
+        var existingRecipe = await _context.Recipes
+            .Include(r => r.Ingredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .FirstOrDefaultAsync(r => r.Id == id);
+
+        if (existingRecipe == null)
+        {
+            return NotFound($"Recipe with ID {id} not found.");
+        }
+
+        // Update top-level fields
+        existingRecipe.Name = updatedRecipe.Name;
+        existingRecipe.PreparationMethod = updatedRecipe.PreparationMethod;
+
+        // Clear old ingredients, then add the updated ones
+        existingRecipe.Ingredients.Clear();
+        foreach (var recipeIngredient in updatedRecipe.Ingredients)
+        {
+            var existingIngredient = await _context.Ingredients.FindAsync(recipeIngredient.IngredientId);
+            if (existingIngredient == null)
+            {
+                return BadRequest($"Ingredient with ID {recipeIngredient.IngredientId} does not exist.");
+            }
+            recipeIngredient.Ingredient = existingIngredient;
+            existingRecipe.Ingredients.Add(recipeIngredient);
+        }
+
         await _context.SaveChangesAsync();
         return NoContent();
     }
 
+    private bool RecipeExists(int id)
+    {
+        return _context.Recipes.Any(e => e.Id == id);
+    }
     // DELETE: api/recipes/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRecipe(int id)
     {
-        var recipe = await _context.Recipes.FindAsync(id);
+        var recipe = await _context.Recipes
+            .Include(r => r.Ingredients)
+            .FirstOrDefaultAsync(r => r.Id == id);
+
         if (recipe == null)
         {
             return NotFound();
