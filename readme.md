@@ -1,6 +1,8 @@
 # Recipe API
 
-This is a .NET 9 Web API project that manages Recipes and Ingredients. It was developed as a pre-project for the LACUNA Software DevOps course. Below you will find instructions on how to set up, run, and test the API.
+🇧🇷 - Este é um projeto de API Web em .NET 9 que gerencia Receitas e Ingredientes. Ele foi desenvolvido como um pré-projeto para o curso de DevOps da LACUNA Software e como um desafio pessoal para aprender C#, construção de APIs em .NET e requisições HTTP. Abaixo, você encontrará instruções sobre como configurar, executar e testar a API.
+
+🇺🇸 - This is a .NET 9 Web API project that manages Recipes and Ingredients. It was developed as a pre-project for the LACUNA Software DevOps course, and as a personal challenge to try and learn C#, API Building in .NET and HTTP requests. Below you will find instructions on how to set up, run, and test the API.
 
 --------------------------------------------------------------------------------
 
