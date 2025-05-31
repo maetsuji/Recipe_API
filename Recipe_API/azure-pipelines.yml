@@ -1,0 +1,7 @@
+pr:
+  - main
+
+jobs:
+  - name: Lint
+    steps:
+      - checkout: 
