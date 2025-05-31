@@ -9,5 +9,3 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 var app = builder.Build();
 app.MapControllers();
 app.Run();
-
-// testing linting actions
