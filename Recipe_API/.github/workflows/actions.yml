@@ -1,0 +1,29 @@
+name: lint.yml
+on:
+  pull-request:
+    branches:
+      - main
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          cache: true
+          dotnet-version: '9.0.x'
+
+      - name: Restore 
+        run: dotnet restore Recipe_API.sln
+
+      - name: Build
+        run: dotnet build Recipe_API.sln --configuration Release --no-restore
+
+      - name: Run Linter
+        run: dotnet format --check --verbosity diagnostic
+        
+      - name: Run Tests
+        run: dotnet test Recipe_API.sln --configuration Release --no-build --verbosity normal
