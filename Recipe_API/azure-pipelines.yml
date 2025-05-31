@@ -5,3 +5,4 @@ jobs:
   - name: Lint
     steps:
       - checkout: 
+        fetchDepth: 0
